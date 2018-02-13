@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PatternMaker : MonoBehaviour {
 
-    public CellPattern Pattern;
+    //public CellPattern Pattern;
 
     public GameObject CellPrefab;
 
@@ -12,23 +12,25 @@ public class PatternMaker : MonoBehaviour {
 
     public int NumCol = 7;
 
-    public float UNIT = 0.5f;
+	public float UNIT = 0.5f;
 
-    private Cell[] Grid;
+    public CellPattern Pattern;
+
+    Cell[] grid;
 
 	// Use this for initialization
 	void Start () {
         Pattern.Positions.Clear();
-		Grid = new Cell[NumCol * NumRow];
+		grid = new Cell[NumCol * NumRow];
 		for (int i = 0; i < NumRow * NumCol; i++)
 		{
 			GameObject go = Instantiate(CellPrefab);
 			go.transform.SetParent(transform);
-			Grid[i] = go.GetComponent<Cell>();
-			Grid[i].SetGrid(NumRow, NumCol);
-			Grid[i].SetPosition(i % NumCol, i / NumCol);
-            Grid[i].SetStatus(Cell.Status.Stationary);
-            Grid[i].OnClicked += OnClicked;
+			grid[i] = go.GetComponent<Cell>();
+			grid[i].SetGrid(NumRow, NumCol);
+			grid[i].SetPosition(i % NumCol, i / NumCol);
+            grid[i].SetStatus(Cell.Status.Stationary);
+            grid[i].OnClicked += OnClicked;
 		}
 	}
 

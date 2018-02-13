@@ -10,58 +10,131 @@ public class GameController : MonoBehaviour {
 
 	public int NumCol = 10;
 
-    public CellPattern Pattern;
+	public CellPattern[] PatternBank;
 
-    private Cell[] Grid;
+	public float DeltaTime = 0.3f;
 
-    private CellPattern _Pattern;
+	Cell[] grid;
 
-	// Use this for initialization
-	void Start () {
+	CellPattern curPattern;
+
+    float curTime;
+
+	bool isRunning;
+
+	CellPattern pattern;
+
+    float TIME_CHANGE = 0.1f;
+
+    int curPatternId = 0;
+
+    void Start()
+    {
+        if (PatternBank.Length > 0)
+		{
+			pattern = PatternBank[curPatternId];
+		}
+    }
+
+    // Use this for initialization
+    void Init ()
+    {
 		// populate the grid of size numCol x numRow
-		Grid = new Cell[NumCol * NumRow];
+		grid = new Cell[NumCol * NumRow];
         for (int i = 0; i < NumRow * NumCol; i++)
         {
 			GameObject go = Instantiate(CellPrefab);
             go.transform.SetParent(transform);
-			Grid[i] = go.GetComponent<Cell>();
-			Grid[i].SetGrid(NumRow, NumCol);
-			Grid[i].SetPosition(i % NumCol, i / NumCol);
-            Grid[i].SetStatus(Cell.Status.Dead);
+			grid[i] = go.GetComponent<Cell>();
+			grid[i].SetGrid(NumRow, NumCol);
+			grid[i].SetPosition(i % NumCol, i / NumCol);
+            grid[i].SetStatus(Cell.Status.Dead);
         }
 
         // populate the cell pattern
-        for (int i = 0; i < Pattern.Positions.Count; i++)
+        for (int i = 0; i < pattern.Positions.Count; i++)
         {
-            int x = Pattern.Positions[i].x + NumCol / 2;
-            int y = Pattern.Positions[i].y + NumRow / 2;
+            int x = pattern.Positions[i].x + NumCol / 2;
+            int y = pattern.Positions[i].y + NumRow / 2;
             int position = y * NumCol + x;
-			Grid[position].SetStatus(Cell.Status.Alive);
+			grid[position].SetStatus(Cell.Status.Alive);
         }
 
-        _Pattern = Pattern;
+        curPattern = pattern;
 	}
-	
+
 	// Update is called once per frame
-	void Update () {
+	void Update()
+	{
         // tick each active cell
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //Debug.Log("tick"); 
-			for (int i = 0; i < NumCol * NumRow; i++)
+            Tick();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (isRunning == false)
 			{
-				Grid[i].Tick(ref Grid);
+				isRunning = true;
 			}
-			for (int i = 0; i < NumCol * NumRow; i++)
+			else if (isRunning == true)
 			{
-                Grid[i].UpdateStatus();
+                isRunning = false;
 			}
         }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow) && isRunning == true)
+        {
+            if (DeltaTime > 2 * TIME_CHANGE)
+            {
+                DeltaTime -= TIME_CHANGE;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+		{
+			DeltaTime += TIME_CHANGE;
+		}
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            curPatternId = (curPatternId + PatternBank.Length - 1) % PatternBank.Length;
+            pattern = PatternBank[curPatternId];
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+		{
+			curPatternId = (curPatternId + 1) % PatternBank.Length;
+            pattern = PatternBank[curPatternId];
+		}
+
+        if (isRunning == true)
+		{
+			if (Time.time - curTime > DeltaTime)
+			{
+				curTime = Time.time;
+				Tick();
+			}
+		}
 	}
 
-    private void LateUpdate()
+    void Tick()
     {
-        if (Pattern != _Pattern)
+        for (int i = 0; i < grid.Length; i++)
+		{
+			grid[i].Tick(ref grid);
+		}
+        for (int i = 0; i < grid.Length; i++)
+		{
+			grid[i].UpdateStatus();
+		}
+    }
+
+    void LateUpdate()
+    {
+        if (pattern != curPattern)
         {
             OnPatternChanged();
         }
@@ -69,11 +142,14 @@ public class GameController : MonoBehaviour {
 
     void OnPatternChanged()
     {
-        for (int i = 0; i < Grid.Length; i++)
-        {
-            Destroy(Grid[i].gameObject);
-            Grid[i] = null;
+        if (grid != null)
+		{
+			for (int i = 0; i < grid.Length; i++)
+			{
+				Destroy(grid[i].gameObject);
+				grid[i] = null;
+			}
         }
-        Start();
+        Init();
     }
 }

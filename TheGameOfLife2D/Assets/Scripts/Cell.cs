@@ -9,21 +9,21 @@ public class Cell : MonoBehaviour {
 
 	public enum Status { Dead, Alive, Stationary, Clicked };
 
+	public event Action<int, int> OnClicked;
+
 	Status curStatus, nextStatus;
 
-    int x, y;
+	int x, y;
 
-    int numRow, numCol;
+	int numRow, numCol;
 
-    SpriteRenderer rend;
+	SpriteRenderer rend;
 
-    Color activeColor = new Color(1, 1, 0, 1);
+	Color activeColor = new Color(1, 1, 0, 1);
 
-    Color inactiveColor = new Color(1, 1, 0, 0);
+	Color inactiveColor = new Color(1, 1, 0, 0);
 
-    public event Action<int, int> OnClicked;
-
-    private void Awake()
+    void Awake()
     {
         rend = GetComponent<SpriteRenderer>();
     }
@@ -172,7 +172,7 @@ public class Cell : MonoBehaviour {
 
         if (OnClicked != null)
         {
-            Debug.Log("OnClicked. x = " + x + ", y = " + y);
+            // Debug.Log("OnClicked. x = " + x + ", y = " + y);
             SetStatus(Status.Clicked);
             OnClicked(x, y);
         }
