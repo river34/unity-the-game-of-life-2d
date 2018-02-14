@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 05a694dd4d19c4991966129a470f9423
+timeCreated: 1518623633
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Bit Trip7 (sRB)
+  fontNames:
+  - Bit Trip7 (sRB)
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
