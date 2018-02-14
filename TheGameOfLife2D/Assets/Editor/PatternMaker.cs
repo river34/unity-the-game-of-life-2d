@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class PatternMaker : MonoBehaviour {
-
-    //public CellPattern Pattern;
 
     public GameObject CellPrefab;
 
@@ -40,5 +39,10 @@ public class PatternMaker : MonoBehaviour {
         position.x = x - NumCol / 2;
         position.y = y - NumRow / 2;
         Pattern.Positions.Add(position);
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        EditorUtility.SetDirty(Pattern);
     }
 }

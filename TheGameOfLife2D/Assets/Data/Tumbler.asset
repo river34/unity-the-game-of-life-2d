@@ -11,4 +11,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d53879f7e05834f18b4673d085e40fa0, type: 3}
   m_Name: Tumbler
   m_EditorClassIdentifier: 
-  Positions: []
+  Positions:
+  - x: -1
+    y: 2
+  - x: -2
+    y: 2
+  - x: -2
+    y: 1
+  - x: -1
+    y: 1
+  - x: -1
+    y: 0
+  - x: -1
+    y: -1
+  - x: -1
+    y: -2
+  - x: -2
+    y: -3
+  - x: -3
+    y: -3
+  - x: -3
+    y: -2
+  - x: -3
+    y: -1
+  - x: 3
+    y: -1
+  - x: 3
+    y: -2
+  - x: 3
+    y: -3
+  - x: 2
+    y: -3
+  - x: 1
+    y: -2
+  - x: 1
+    y: -1
+  - x: 1
+    y: 0
+  - x: 1
+    y: 1
+  - x: 1
+    y: 2
+  - x: 2
+    y: 2
+  - x: 2
+    y: 1
