@@ -188,9 +188,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CellPrefab: {fileID: 1042014357955166, guid: e6f0480b314ad47b5b628bac28212516, type: 2}
-  NumRow: 20
-  NumCol: 20
-  UNIT: 1
+  NumRow: 7
+  NumCol: 7
+  UNIT: 0.5
   Pattern: {fileID: 11400000, guid: 5278bd3ff716a4722bbb209b70dffa9a, type: 2}
 --- !u!4 &251166239
 Transform:
